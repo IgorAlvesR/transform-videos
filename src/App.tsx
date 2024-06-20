@@ -29,15 +29,10 @@ export function App() {
     try {
       if (!event.target.files) return
       const files = Array.from(event.target.files)
-      const insuficientFiles = files.length < 1
       const incorretTypeFiles = files.some((file) => file.type !== 'video/mp4')
 
       if (incorretTypeFiles) {
         throw new Error('Somente arquivos do tipo video/mp4 são permitidos')
-      }
-
-      if (insuficientFiles) {
-        throw new Error('É necessário mais de um arquivo selecionado.')
       }
 
       setFiles(files)
