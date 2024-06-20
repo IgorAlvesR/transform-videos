@@ -1,4 +1,12 @@
-import { Download, FileVideo, Play, RotateCw } from 'lucide-react'
+import {
+  Check,
+  Download,
+  FileVideo,
+  Merge,
+  Play,
+  RotateCw,
+  Scissors,
+} from 'lucide-react'
 import { ChangeEvent, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from './components/ui/button'
@@ -11,7 +19,9 @@ export function App() {
   const [files, setFiles] = useState<File[]>([])
   const [videoUrl, setVideoUrl] = useState<string>()
   const [videosUrls, setVideosUrls] = useState<string[]>([])
-  const [status, setStatus] = useState<'stop' | 'unify' | 'split'>('stop')
+  const [status, setStatus] = useState<'stop' | 'unify' | 'split' | 'ready'>(
+    'stop',
+  )
   const inputFile = useRef<HTMLInputElement | null>(null)
   const videoRef = useRef<HTMLVideoElement | null>(null)
 
@@ -62,7 +72,7 @@ export function App() {
 
       const urls = await videoService.splitVideo(url, videoRef.current.duration)
       setVideosUrls(urls)
-      setStatus('stop')
+      setStatus('ready')
     } catch (error) {
       if (error instanceof Error) {
         toast.error(
@@ -73,6 +83,7 @@ export function App() {
   }
 
   function handleResetForm() {
+    setStatus('stop')
     if (inputFile.current) {
       inputFile.current.value = ''
     }
@@ -83,11 +94,15 @@ export function App() {
 
   function getBgColor() {
     if (status === 'split') {
-      return 'bg-green-500'
+      return 'bg-blue-500'
     }
 
     if (status === 'unify') {
       return 'bg-yellow-500'
+    }
+
+    if (status === 'ready') {
+      return 'bg-green-500'
     }
 
     return 'bg-primary'
@@ -95,14 +110,38 @@ export function App() {
 
   function getLabel() {
     if (status === 'split') {
-      return 'Transformando...'
+      return (
+        <div className="flex items-center gap-1">
+          <Scissors className="h-5" />
+          Editando...
+        </div>
+      )
     }
 
     if (status === 'unify') {
-      return 'Unificando...'
+      return (
+        <div className="flex items-center gap-1">
+          <Merge className="h-5" />
+          Unificando...
+        </div>
+      )
     }
 
-    return 'Iniciar'
+    if (status === 'ready') {
+      return (
+        <div className="flex items-center gap-1">
+          <Check className="h-5" />
+          Pronto
+        </div>
+      )
+    }
+
+    return (
+      <div className="flex items-center gap-1">
+        <Play className="h-4" />
+        Iniciar
+      </div>
+    )
   }
 
   return (
@@ -125,7 +164,6 @@ export function App() {
             className={`w-full hover:${getBgColor()} ${getBgColor()} flex items-center`}
             onClick={() => handleInit()}
           >
-            {status === 'stop' && <Play className="h-4" />}
             {getLabel()}
           </Button>
 
