@@ -1,4 +1,4 @@
-import { FileVideo, Play, RotateCw } from 'lucide-react'
+import { Download, FileVideo, Play, RotateCw } from 'lucide-react'
 import { ChangeEvent, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from './components/ui/button'
@@ -10,8 +10,10 @@ const videoService = new VideoService()
 export function App() {
   const [files, setFiles] = useState<File[]>([])
   const [videoUrl, setVideoUrl] = useState<string>()
-  const [status, setStatus] = useState<'stop' | 'unify' | 'download'>('stop')
+  const [videosUrls, setVideosUrls] = useState<string[]>([])
+  const [status, setStatus] = useState<'stop' | 'unify' | 'split'>('stop')
   const inputFile = useRef<HTMLInputElement | null>(null)
+  const videoRef = useRef<HTMLVideoElement | null>(null)
 
   function handleInput(event: ChangeEvent<HTMLInputElement>) {
     try {
@@ -47,14 +49,19 @@ export function App() {
   async function handleInit() {
     try {
       setStatus('unify')
-
       const url = await videoService.unifyVideos(files)
       setVideoUrl(url)
 
-      setStatus('download')
       await sleep(1000)
-      videoService.dowload(url)
+      setStatus('split')
 
+      if (!videoRef.current) {
+        setStatus('stop')
+        return
+      }
+
+      const urls = await videoService.splitVideo(url, videoRef.current.duration)
+      setVideosUrls(urls)
       setStatus('stop')
     } catch (error) {
       if (error instanceof Error) {
@@ -71,10 +78,11 @@ export function App() {
     }
     setVideoUrl('')
     setFiles([])
+    setVideosUrls([])
   }
 
   function getBgColor() {
-    if (status === 'download') {
+    if (status === 'split') {
       return 'bg-green-500'
     }
 
@@ -86,12 +94,12 @@ export function App() {
   }
 
   function getLabel() {
-    if (status === 'download') {
-      return 'Baixando'
+    if (status === 'split') {
+      return 'Transformando...'
     }
 
     if (status === 'unify') {
-      return 'Unificando'
+      return 'Unificando...'
     }
 
     return 'Iniciar'
@@ -117,7 +125,7 @@ export function App() {
             className={`w-full hover:${getBgColor()} ${getBgColor()} flex items-center`}
             onClick={() => handleInit()}
           >
-            <Play className="h-4" />
+            {status === 'stop' && <Play className="h-4" />}
             {getLabel()}
           </Button>
 
@@ -131,14 +139,32 @@ export function App() {
           </Button>
         </div>
 
-        {videoUrl && (
+        {videoUrl && <video ref={videoRef} src={videoUrl} controls hidden />}
+
+        {!!videosUrls.length && (
           <div className="border rounded-md">
-            <p className="text-sm text-zinc-500 p-2 font-medium">Preview</p>
-            <video
-              className="max-h-[300px] w-full object-contain"
-              src={videoUrl}
-              controls
-            />
+            <div className="flex justify-between items-center p-2 border">
+              <p className="text-sm text-zinc-500 p-2 font-medium">Preview</p>
+              <Button
+                onClick={() => videoService.dowload(videosUrls)}
+                size="sm"
+                variant="outline"
+              >
+                <Download className="h-3" />
+                Download
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6">
+              {videosUrls.map((url) => (
+                <video
+                  key={url}
+                  className="max-h-[150px] w-full object-contain"
+                  src={url}
+                  controls
+                />
+              ))}
+            </div>
           </div>
         )}
       </div>
