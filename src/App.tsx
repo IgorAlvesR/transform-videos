@@ -1,3 +1,4 @@
+import { FileVideo, Play, RotateCw } from 'lucide-react'
 import { ChangeEvent, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from './components/ui/button'
@@ -97,12 +98,12 @@ export function App() {
   }
 
   return (
-    <main className="max-w-lg p-4 mx-auto space-y-1">
+    <main className="max-w-md md:max-w-xl p-4 mx-auto space-y-6">
       <div className="space-y-px">
-        <h1 className="text-lg font-semibold">Ajuste o tempo de seus vídeos</h1>
-        <p className="text-sm text-zinc-500">
-          Agora você pode cortar vídeos para o tempo exato do story do instagram
-        </p>
+        <FileVideo className="text-center w-full h-12" />
+        <h1 className="text-center text-md sm:text-2xl font-semibold">
+          Transforme seus vídeos em clipes de 1 minuto
+        </h1>
       </div>
 
       <div className="flex flex-col gap-3">
@@ -113,17 +114,19 @@ export function App() {
         <div className="flex items-center justify-between gap-1">
           <Button
             disabled={!files.length}
-            className={`w-full hover:${getBgColor()} ${getBgColor()}`}
+            className={`w-full hover:${getBgColor()} ${getBgColor()} flex items-center`}
             onClick={() => handleInit()}
           >
+            <Play className="h-4" />
             {getLabel()}
           </Button>
 
           <Button
             onClick={() => handleResetForm()}
-            className="w-full"
+            className="w-full flex items-center"
             variant="outline"
           >
+            <RotateCw className="h-4" />
             Limpar
           </Button>
         </div>
