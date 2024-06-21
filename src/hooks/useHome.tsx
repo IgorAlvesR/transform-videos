@@ -17,19 +17,18 @@ export function useHome(videoService: VideoService) {
     try {
       if (!event.target.files) return
       const files = Array.from(event.target.files)
-      const corretTypeFiles = files.some(
-        (file) => file.type === 'video/mp4' || file.type === 'video/quicktime',
-      )
+      const incorretTypeFiles = files.some((file) => file.type !== 'video/mp4')
 
-      if (!corretTypeFiles) {
-        throw new Error('Somente arquivos do tipo .mp4 e .mov são permitidos')
+      if (incorretTypeFiles) {
+        handleResetForm()
+        throw new Error('Somente arquivos video/mp4 são permitidos')
       }
 
       setFiles(files)
     } catch (error) {
       if (error instanceof Error) {
         toast.error(
-          `Ocorreu um problema ao iniciar o processo. (${error.message})`,
+          `Ocorreu um problema ao processar vídeos. (${error.message})`,
         )
       }
     }

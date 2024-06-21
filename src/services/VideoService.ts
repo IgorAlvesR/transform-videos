@@ -86,31 +86,14 @@ export class VideoService {
     // Array para armazenar as promessas de gravação dos arquivos
     const writePromises = files.map(async (file, index) => {
       const _file = await fetchFile(file)
-      if (file.type === 'video/quicktime') {
-        await ffmpeg.writeFile(`input${index}.mov`, _file)
-      }
-
-      if (file.type === 'video/mp4') {
-        await ffmpeg.writeFile(`input${index}.mp4`, _file)
-      }
+      await ffmpeg.writeFile(`input${index}.mp4`, _file)
     })
 
     await Promise.all(writePromises)
 
     // Criar um arquivo de texto de concatenação
     const concatFileContent = files
-      .map((file, index) => {
-        let fileName = ''
-        if (file.type === 'video/quicktime') {
-          fileName = `file 'input${index}.mov'`
-        }
-
-        if (file.type === 'video/mp4') {
-          fileName = `file 'input${index}.mp4'`
-        }
-
-        return fileName
-      })
+      .map((_, index) => `file 'input${index}.mp4'`)
       .join('\n')
 
     await ffmpeg.writeFile('videos.txt', concatFileContent)

@@ -31,7 +31,13 @@ export function Home() {
 
       <div className="flex flex-col gap-3">
         <div className="border p-6 rounded-md">
-          <Input ref={inputFile} type="file" multiple onChange={handleInput} />
+          <Input
+            accept="video/*"
+            ref={inputFile}
+            type="file"
+            multiple
+            onChange={handleInput}
+          />
         </div>
 
         <div className="flex items-center justify-between gap-1">

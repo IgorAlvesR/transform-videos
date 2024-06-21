@@ -10,7 +10,7 @@ export class FFmpegAdapter {
     try {
       const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm'
       const ffmpeg = new FFmpeg()
-      /*   ffmpeg.on('log', ({ message }) => {
+      /* ffmpeg.on('log', ({ message }) => {
         console.log(message)
       }) */
 
