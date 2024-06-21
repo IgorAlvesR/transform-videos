@@ -17,10 +17,12 @@ export function useHome(videoService: VideoService) {
     try {
       if (!event.target.files) return
       const files = Array.from(event.target.files)
-      const incorretTypeFiles = files.some((file) => file.type !== 'video/mp4')
+      const corretTypeFiles = files.some(
+        (file) => file.type === 'video/mp4' || file.type === 'video/quicktime',
+      )
 
-      if (incorretTypeFiles) {
-        throw new Error('Somente arquivos do tipo video/mp4 são permitidos')
+      if (!corretTypeFiles) {
+        throw new Error('Somente arquivos do tipo .mp4 e .mov são permitidos')
       }
 
       setFiles(files)
