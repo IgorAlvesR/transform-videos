@@ -1,30 +1,61 @@
-# React + TypeScript + Vite
+# Transformar vídeos em clipes de 1 minuto
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/igoralvesr/transform-videos)
 
-Currently, two official plugins are available:
+> Esta é uma aplicação para resolver uma dor de um usuário que precisa adicionar stories ao instagram porém precisa ficar editando os vídeos para que fique no tamanho adequado.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<div style="width:100%; display:flex; align-items:center; gap:16px; flex-direction: column;">
+  <div style="display: flex; justify-content: center; gap: 10px;">
+    <img src="./public/img01.png" width="50%" />
+    <img src="./public/img02.png" width="50%" />
+  </div>
+</div>
 
-## Expanding the ESLint configuration
+## 📄 Casos de uso
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Unificar vídeos
+- Cortar vídeo geradao em clipes de 1 minuto
 
-- Configure the top-level `parserOptions` property like this:
+## 💡 Padrões abordados
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- Como boas práticas e para facilitar a testabilidade do projeto foi utilizado injeção e inversão de dependência.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## 🚀 Melhorias futuras
+
+- [ ] Dividir em componentes
+- [ ] Criar testes automatizados
+
+## 💻 Como rodar o projeto
+
+- Node >= 20.13.1
+- Gerenciador de pacotes `pnpm`
+- Executar `pnpm install` para instalar as dependências
+- Executar `pnpm dev` para rodar aplicação
+- Acessar `http://localhost:5173/` para acessar aplicação 
+
+## 🌐 Links úteis
+[HTML](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
+[CSS](https://developer.mozilla.org/pt-BR/docs/Web/css)
+[JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/javascript)
+[Lucide Icons](https://lucide.dev/)
+[React](https://react.dev/)
+[Shadcn/ui](https://ui.shadcn.com/)
+
+## 👨‍💻 Tecnologias utilizadas
+
+- HTML
+- CSS
+- JavaScript
+- Lucide (icons)
+- Shadcn/ui (lib de componentes)
+
+## 🧑‍💻 Igor Alves Rodrigues
+
+[<img
+  src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" />](https://www.linkedin.com/in/igor-alves-rodrigues-7941a116b/)
+[<img
+  src=" https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" />](https://gthub.com/igoralvesr)
+[<img
+  src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />](http://wa.me/5548998434969)
+[<img src="https://img.shields.io/website-up-down-green-red/http/shields.io.svg"
+  height="28" />](https://igoralvesr.github.io)
