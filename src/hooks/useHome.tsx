@@ -59,6 +59,7 @@ export function useHome(videoService: VideoService) {
       setVideosUrls(urls)
       setStatus('ready')
     } catch (error) {
+      setStatus('stop')
       if (error instanceof Error) {
         toast.error(
           `Ocorreu um problema ao iniciar o processo. (${error.message})`,
